@@ -15,9 +15,9 @@ const createCompany = async (rawData, domain, accessToken) => {
       ]
     }
   ]
-  const { data } = await makeAmoRequest({ domain, endpoint, accessToken, method, body })
+  const { _embedded } = await makeAmoRequest({ domain, endpoint, accessToken, method, body })
   
-  return data._embedded.companies[0].id
+  return _embedded.companies[0].id
 }
 
 module.exports = { createCompany }

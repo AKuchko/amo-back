@@ -6,7 +6,6 @@ dataRouter.get('/:id', async (req, res) => {
   try {
     const { id } = req.params
     const { data } = await dadataClient.get('', { params: { query: id } })
-    console.log(data.suggestions[0]);
     res.json(data.suggestions[0])
   } catch (error) {
     console.error(error.message)
