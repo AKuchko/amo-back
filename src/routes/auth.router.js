@@ -1,7 +1,6 @@
 const { Router } = require('express')
 const { User } = require('../models')
 const { getAuth } = require('../helpers/getAuth.js')
-// const axios = require('axios')
 
 const authRouter = new Router()
 

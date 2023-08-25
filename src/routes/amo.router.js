@@ -1,24 +1,25 @@
 const { Router } = require('express')
-const { amoClient } = require('../http/amoClient')
-const amoMiddleware = require('../middleware/amo.middleware.js')
 const { User } = require('../models')
+const { makeAmoRequest } = require('../helpers/amoRequest.js')
+const { createCompany } = require('../helpers/createCompany.js')
+const { createLead } = require('../helpers/createLead.js')
+const amoMiddleware = require('../middleware/amo.middleware.js')
 
 const amoRouter = new Router()
 
 amoRouter.use(amoMiddleware)
 
-amoRouter.get('/leads', async (req, res) => {
+amoRouter.post('/createLead', async (req, res) => {
   try {
-    // console.log(req.get('Origin'));
     const domain = req.originDomain
+    const { body } = req
     const { access } = await User.findOne({ domain })
-    amoClient.defaults.headers.common['Authorization'] = `Bearer ${access}`
-    const {data} = await amoClient.get(`https://${domain}/api/v4/leads`)
-    console.log(data);
+    body.company.id = await createCompany(body.company, domain, access)
+    const leadData = await createLead(body, domain, access)
 
-    // const data = await amoClient.get('')
+    res.status(201).json(leadData.data)
   } catch (error) {
-    
+    console.log(error);
   }
 })
 

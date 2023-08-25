@@ -6,4 +6,4 @@ const amoClient = create({
   }
 })
 
-module.exports = { amoClient }
+module.exports = { get: amoClient.get, post: amoClient.post }
