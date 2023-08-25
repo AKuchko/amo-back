@@ -14,12 +14,24 @@ amoRouter.post('/createLead', async (req, res) => {
     const domain = req.originDomain
     const { body } = req
     const { access } = await User.findOne({ domain })
-    body.company.id = await createCompany(body.company, domain, access)
+    const company = await makeAmoRequest({
+      domain, 
+      accessToken: access,
+      endpoint: 'companies',
+      query: {
+        name: body.company.name
+      }
+    }).then(res => res._embedded.companies[0])
+
+    if (!company) body.company.id = await createCompany(body.company, domain, access)
+    else body.company.id = company.id
+
     const leadData = await createLead(body, domain, access)
 
     res.status(201).json(leadData.data)
   } catch (error) {
     console.log(error);
+    res.json(error)
   }
 })
 

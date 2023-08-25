@@ -3,6 +3,4 @@ const { UserSchema } = require('./User.schema.js')
 
 const User = model('User', UserSchema)
 
-module.exports = {
-  User,
-}
+module.exports = { User }

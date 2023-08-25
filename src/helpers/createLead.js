@@ -1,19 +1,18 @@
 const { makeAmoRequest } = require('./amoRequest.js')
 
-const createLead = async (data, domain, access) => {
+const createLead = async (data, domain, accessToken) => {
   const { name, price, company } = data
-
-  const lead = [
+  const endpoint = 'leads'
+  const method = 'post'
+  const body = [
     {
       name,
       price,
-      _embedded: {
-        companies: [{ id: company.id }]
-      }
+      _embedded: company.require ? { companies: [{ id: company.id }] } : {}
     }
   ]
 
-  return await makeAmoRequest(domain, 'leads', access, 'post', lead)
+  return await makeAmoRequest({ domain, endpoint, accessToken, method, body })
 }
 
 module.exports = { createLead }
