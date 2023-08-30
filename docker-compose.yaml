@@ -1,0 +1,34 @@
+version: '3'
+services:
+  node-app: 
+    build: .
+    image: node-app
+    environment: 
+      - MONGO_DB=mongodb://mongodb:27017/amo-back
+      - DADATA_TOKEN=75498aba0b7147faf73a9c520dc2cea45c4bec65
+      - SECRET_KEY=UIg773kgPCbb1Pdn2oIg77fP6ZTA9BEdZ1HksWOKtrIZq8QiDkIMrITTbbopBCRN
+    networks: 
+      - amo-back
+    depends_on:
+      - mongodb
+    ports: 
+      - "3000:3000"
+
+  mongodb:
+    image: mongo:6-jammy
+    restart: always
+    networks: 
+      - amo-back
+    volumes: 
+      - mongodb-data:/data/db
+    ports: 
+      - "27017:27017"
+    command: mongod
+
+networks: 
+  amo-back: 
+    driver: bridge
+
+volumes:
+  mongodb-data:
+    driver: local

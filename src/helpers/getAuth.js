@@ -5,7 +5,7 @@ const GrantType = {
   RefreshToken: 'refresh_token',
 }
 
-const { SECRET_KEY } = process.env
+const { SECRET_KEY, REDIRECT_URI } = process.env
 
 const getAuth = async ({ token, type = GrantType.AuthCode, referer, client_id }) => {
   const { data } = await axios.post(
@@ -13,7 +13,7 @@ const getAuth = async ({ token, type = GrantType.AuthCode, referer, client_id })
     {
       client_id,
       client_secret: SECRET_KEY,
-      redirect_uri: 'https://0b1c-92-126-119-3.ngrok-free.app/auth/verify_code',
+      redirect_uri: REDIRECT_URI,
       grant_type: type,
       [type === GrantType.AuthCode ? 'code' : 'refresh_token']: token
     },

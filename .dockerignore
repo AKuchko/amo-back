@@ -1,0 +1,9 @@
+.node_modules
+.DS_Store
+.vscode/*
+!.vscode/extensions.json
+dist
+
+.editorconfig
+.gitignore
+README.md
