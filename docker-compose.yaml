@@ -7,6 +7,7 @@ services:
       - MONGO_DB=mongodb://mongodb:27017/amo-back
       - DADATA_TOKEN=75498aba0b7147faf73a9c520dc2cea45c4bec65
       - SECRET_KEY=UIg773kgPCbb1Pdn2oIg77fP6ZTA9BEdZ1HksWOKtrIZq8QiDkIMrITTbbopBCRN
+      - REDIRECT_URI=https://localhost:3000/auth/verify_code
     networks: 
       - amo-back
     depends_on:
